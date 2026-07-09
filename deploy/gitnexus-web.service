@@ -1,0 +1,35 @@
+[Unit]
+Description=GitNexus Web UI (port 4747)
+After=network.target
+Documentation=https://github.com/looptech-ai/gitnexus
+StartLimitIntervalSec=60s
+StartLimitBurst=3
+
+[Service]
+Type=simple
+User=gitnexus
+Group=gitnexus
+
+# Paths — adjust if layout differs
+Environment=GITNEXUS_HOME=/opt/gitnexus-home
+Environment=GITNEXUS_WEB_HOST=127.0.0.1
+Environment=GITNEXUS_WEB_PORT=4747
+EnvironmentFile=-/etc/gitnexus/web.env
+ExecStart=/usr/local/bin/gitnexus serve --host ${GITNEXUS_WEB_HOST} --port ${GITNEXUS_WEB_PORT}
+
+# Restart on crash; back off after repeated failures
+Restart=on-failure
+RestartSec=5s
+
+# Hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/opt/gitnexus-home /opt/code-repos
+PrivateTmp=true
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=gitnexus-web
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,22 @@
+{
+  "service": "user-service",
+  "exported_at": "2026-06-22T10:15:00Z",
+  "index": {
+    "path": "/workspace/platform-workspace/backend-core/user-service",
+    "indexed_at": "2026-06-22T10:05:33Z",
+    "commit": "unknown",
+    "skip_git": true
+  },
+  "stats": {
+    "files": 1714,
+    "symbols": 11913,
+    "edges": 25592,
+    "clusters": 712,
+    "processes": 300
+  },
+  "check": {
+    "status": "clean",
+    "cycleCount": 0,
+    "cycles": []
+  }
+}

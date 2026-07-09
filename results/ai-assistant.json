@@ -1,0 +1,36 @@
+{
+  "service": "assistant-service",
+  "exported_at": "2026-06-22T10:15:00Z",
+  "index": {
+    "path": "/workspace/platform-workspace/assistant-service",
+    "indexed_at": "2026-06-22T10:07:15Z",
+    "commit": "ca11306",
+    "branch": "main",
+    "skip_git": true
+  },
+  "stats": {
+    "files": 1290,
+    "symbols": 24200,
+    "edges": 46243,
+    "clusters": 934,
+    "processes": 300
+  },
+  "check": {
+    "status": "cycles_found",
+    "cycleCount": 12,
+    "cycles": [
+      {"files": ["dbgpt/app/chat_adapter.py", "dbgpt/model/adapter/old_adapter.py", "dbgpt/app/chat_adapter.py"]},
+      {"files": ["dbgpt/core/__init__.py", "dbgpt/core/interface/output_parser.py", "dbgpt/core/__init__.py"]},
+      {"files": ["dbgpt/core/awel/__init__.py", "dbgpt/core/awel/operators/base.py", "dbgpt/core/awel/__init__.py"]},
+      {"files": ["dbgpt/model/adapter/base.py", "dbgpt/model/adapter/template.py", "dbgpt/model/adapter/fschat_adapter.py", "dbgpt/model/adapter/base.py"]},
+      {"files": ["dbgpt/rag/embedding_engine/__init__.py", "dbgpt/rag/embedding_engine/knowledge_type.py", "dbgpt/rag/embedding_engine/csv_embedding.py", "dbgpt/rag/embedding_engine/__init__.py"]},
+      {"files": ["dbgpt/rag/graph/graph_engine.py", "dbgpt/rag/graph/graph_search.py", "dbgpt/rag/graph/graph_engine.py"]},
+      {"files": ["dbgpt/rag/graph_engine/graph_engine.py", "dbgpt/rag/graph_engine/graph_search.py", "dbgpt/rag/graph_engine/graph_engine.py"]},
+      {"files": ["dbgpt/serve/conversation/api/endpoints.py", "dbgpt/serve/conversation/service/service.py", "dbgpt/serve/conversation/serve.py", "dbgpt/serve/conversation/api/endpoints.py"]},
+      {"files": ["dbgpt/util/tracer/__init__.py", "dbgpt/util/tracer/tracer_impl.py", "dbgpt/util/tracer/tracer_middleware.py", "dbgpt/util/tracer/__init__.py"]},
+      {"files": ["web/client/api/index.ts", "web/client/api/request.ts", "web/client/api/index.ts"]},
+      {"files": ["web/components/chat/chat-content/agent-messages.tsx", "web/components/chat/chat-content/config.tsx", "web/components/chat/chat-content/agent-messages.tsx"]},
+      {"files": ["web/components/database/form-dialog.tsx", "web/pages/database/index.tsx", "web/components/database/form-dialog.tsx"]}
+    ]
+  }
+}

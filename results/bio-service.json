@@ -1,0 +1,30 @@
+{
+  "service": "bio-service",
+  "exported_at": "2026-06-22T10:15:00Z",
+  "index": {
+    "path": "/workspace/platform-workspace/backend-core/bio-service",
+    "indexed_at": "2026-06-22T10:04:51Z",
+    "commit": "unknown",
+    "skip_git": true
+  },
+  "stats": {
+    "files": 1466,
+    "symbols": 14492,
+    "edges": 33896,
+    "clusters": 809,
+    "processes": 300
+  },
+  "check": {
+    "status": "cycles_found",
+    "cycleCount": 1,
+    "cycles": [
+      {
+        "files": [
+          "src/main/java/com/example/bio/processing/ProviderSyncComponent.java",
+          "src/main/java/com/example/bio/context/ProviderSyncContext.java",
+          "src/main/java/com/example/bio/processing/ProviderSyncComponent.java"
+        ]
+      }
+    ]
+  }
+}

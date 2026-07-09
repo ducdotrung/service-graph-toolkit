@@ -1,0 +1,227 @@
+# Example Platform Inventory
+#
+# This file is a public-safe example of the manifest structure used by the
+# microservice call graph workspace. It is intentionally generic and should be
+# adapted to your own platform before use.
+
+schema_version: 2
+last_updated: 2026-07-09
+scope: example
+
+repos:
+  backend-core:
+    path: backend-core
+    type: monorepo
+    primary_lang: java
+    build: maven
+    chart_path: chart
+    notes: |
+      Example backend monorepo containing multiple deployable services and
+      shared modules.
+
+  platform-tools:
+    path: platform-tools
+    type: multi-repo-folder
+    primary_lang: mixed
+    notes: |
+      Example folder containing sibling repos such as MCP servers or utility
+      services.
+
+  assistant-service:
+    path: assistant-service
+    type: single-service
+    primary_lang: python
+    build: poetry
+
+services:
+  gateway-service:
+    repo: backend-core
+    paths:
+      app_module: backend-core/gateway-service
+      spring_resources: backend-core/gateway-service/src/main/resources
+    role: gateway
+    framework: spring-cloud-gateway
+    port: 8080
+    chart:
+      kind: local
+      namespace: app
+      vs_path_prefix: /
+      evidence: backend-core/chart
+    gitnexus_index:
+      name: gateway-service
+      analyze_path: backend-core/gateway-service
+      strategy: per-service
+      skip_git: true
+
+  identity-service:
+    repo: backend-core
+    paths:
+      app_module: backend-core/identity-service/identity-app
+      client_module: backend-core/identity-service/identity-client
+      spring_resources: backend-core/identity-service/identity-app/src/main/resources
+    role: backend
+    framework: spring-boot
+    port: 8080
+    chart:
+      kind: published
+      name: backend-service
+      namespace: app
+      vs_path_prefix: /identity/
+      evidence: deploy/charts/backend-service
+    db:
+      kind: postgres
+      schema: identity
+      evidence: backend-core/identity-service/identity-app/src/main/resources/application.yml
+    feign_clients_exposed:
+      - module: backend-core/identity-service/identity-client
+        clients:
+          - name: IdentityClient
+            file: backend-core/identity-service/identity-client/src/main/java/com/example/identity/client/IdentityClient.java
+    gitnexus_index:
+      name: identity-service
+      analyze_path: backend-core/identity-service
+      strategy: per-service
+      skip_git: true
+
+  bio-service:
+    repo: backend-core
+    paths:
+      app_module: backend-core/bio-service
+      spring_resources: backend-core/bio-service/src/main/resources
+    role: bio
+    framework: spring-boot
+    port: 8080
+    chart:
+      kind: published
+      name: backend-service
+      namespace: app
+      vs_path_prefix: /api/
+      evidence: deploy/charts/backend-service
+    kafka:
+      consumer: true
+      topics_consumed:
+        - topic: user.created
+          evidence: backend-core/bio-service/src/main/java/com/example/bio/UserCreatedListener.java
+    consumes:
+      - service: identity-service
+        via: feign
+        package: com.example.identity.client
+        evidence: backend-core/bio-service/src/main/java/com/example/bio/BioApplication.java
+    gitnexus_index:
+      name: bio-service
+      analyze_path: backend-core/bio-service
+      strategy: per-service
+      skip_git: true
+
+  user-service:
+    repo: backend-core
+    paths:
+      app_module: backend-core/user-service
+      spring_resources: backend-core/user-service/src/main/resources
+    role: backend
+    framework: spring-boot
+    port: 8080
+    chart:
+      kind: published
+      name: backend-service
+      namespace: app
+      vs_path_prefix: /users/
+      evidence: deploy/charts/backend-service
+    kafka:
+      producer: true
+      topics_produced:
+        - topic: user.created
+          evidence: backend-core/user-service/src/main/java/com/example/user/UserEvents.java
+    gitnexus_index:
+      name: user-service
+      analyze_path: backend-core/user-service
+      strategy: per-service
+      skip_git: true
+
+  platform-mcp:
+    repo: platform-tools
+    paths:
+      app_module: platform-tools/platform-mcp
+    role: mcp
+    framework: spring-boot
+    port: 8080
+    mcp_tools:
+      - get-users
+      - get-accounts
+      - get-audit-log
+    gitnexus_index:
+      name: platform-mcp
+      analyze_path: platform-tools/platform-mcp
+      strategy: per-service
+      skip_git: true
+
+  assistant-service:
+    repo: assistant-service
+    paths:
+      app_module: assistant-service
+    role: ai-app
+    framework: python-web
+    port: 7860
+    consumes:
+      - service: platform-mcp
+        via: mcp_tool_use
+        evidence: assistant-service/config/tools.json
+    gitnexus_index:
+      name: assistant-service
+      analyze_path: assistant-service
+      strategy: single-repo
+      skip_git: false
+
+edges:
+  - from: gateway-service
+    to: identity-service
+    kind: gateway_route
+    path_prefix: /identity/**
+    evidence: backend-core/gateway-service/src/main/resources/application.yml
+
+  - from: gateway-service
+    to: bio-service
+    kind: gateway_route
+    path_prefix: /api/**
+    evidence: backend-core/gateway-service/src/main/resources/application.yml
+
+  - from: gateway-service
+    to: user-service
+    kind: gateway_route
+    path_prefix: /users/**
+    evidence: backend-core/gateway-service/src/main/resources/application.yml
+
+  - from: bio-service
+    to: identity-service
+    kind: feign_call
+    via_client: IdentityClient
+    evidence: backend-core/bio-service/src/main/java/com/example/bio/BioApplication.java
+
+  - from: user-service
+    to: kafka
+    kind: kafka
+    topic: user.created
+    evidence: backend-core/user-service/src/main/java/com/example/user/UserEvents.java
+
+  - from: kafka
+    to: bio-service
+    kind: kafka
+    topic: user.created
+    evidence: backend-core/bio-service/src/main/java/com/example/bio/UserCreatedListener.java
+
+  - from: assistant-service
+    to: platform-mcp
+    kind: mcp_tool_use
+    tool: get-users
+    evidence: assistant-service/config/tools.json
+
+open_questions:
+  q1:
+    question: Does `gitnexus group sync` bridge declarative HTTP clients to controllers reliably enough to reduce manual edges?
+    status: open
+  q2:
+    question: Which runtime-only dependencies should remain manifest-driven instead of inferred?
+    status: open
+  q3:
+    question: Should generated views be committed or regenerated only in CI?
+    status: open

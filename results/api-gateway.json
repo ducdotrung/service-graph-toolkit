@@ -1,0 +1,22 @@
+{
+  "service": "gateway-service",
+  "exported_at": "2026-06-22T10:15:00Z",
+  "index": {
+    "path": "/workspace/platform-workspace/backend-core/gateway-service",
+    "indexed_at": "2026-06-22T10:03:40Z",
+    "commit": "unknown",
+    "skip_git": true
+  },
+  "stats": {
+    "files": 35,
+    "symbols": 192,
+    "edges": 367,
+    "clusters": 12,
+    "processes": 16
+  },
+  "check": {
+    "status": "clean",
+    "cycleCount": 0,
+    "cycles": []
+  }
+}

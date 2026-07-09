@@ -1,0 +1,51 @@
+  Indexed Repositories (6)
+
+  gateway-service
+    Path:    /workspace/platform-workspace/backend-core/gateway-service
+    Indexed: 6/22/2026, 10:03:40 AM
+    Commit:  unknown
+    Stats:   35 files, 192 symbols, 367 edges
+    Clusters:   12
+    Processes:  16
+
+  identity-service
+    Path:    /workspace/platform-workspace/backend-core/identity-service
+    Indexed: 6/22/2026, 10:03:57 AM
+    Commit:  unknown
+    Stats:   114 files, 681 symbols, 1278 edges
+    Clusters:   28
+    Processes:  36
+
+  bio-service
+    Path:    /workspace/platform-workspace/backend-core/bio-service
+    Indexed: 6/22/2026, 10:04:51 AM
+    Commit:  unknown
+    Stats:   1466 files, 14492 symbols, 33896 edges
+    Clusters:   809
+    Processes:  300
+
+  user-service
+    Path:    /workspace/platform-workspace/backend-core/user-service
+    Indexed: 6/22/2026, 10:05:33 AM
+    Commit:  unknown
+    Stats:   1714 files, 11913 symbols, 25592 edges
+    Clusters:   712
+    Processes:  300
+
+  platform-mcp
+    Path:    /workspace/platform-workspace/platform-tools/platform-mcp
+    Indexed: 6/22/2026, 10:06:14 AM
+    Commit:  46dc54d
+    Branch:  main
+    Stats:   37 files, 317 symbols, 531 edges
+    Clusters:   7
+    Processes:  24
+
+  assistant-service
+    Path:    /workspace/platform-workspace/assistant-service
+    Indexed: 6/22/2026, 10:07:15 AM
+    Commit:  ca11306
+    Branch:  main
+    Stats:   1290 files, 24200 symbols, 46243 edges
+    Clusters:   934
+    Processes:  300

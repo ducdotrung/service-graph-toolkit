@@ -1,0 +1,36 @@
+[Unit]
+Description=GitNexus MCP HTTP Server (port 4748)
+After=network.target
+Documentation=https://github.com/looptech-ai/gitnexus
+
+[Service]
+Type=simple
+User=gitnexus
+Group=gitnexus
+
+# Paths — adjust if layout differs
+Environment=GITNEXUS_HOME=/opt/gitnexus-home
+# Token is read from the EnvironmentFile — do not hard-code here
+EnvironmentFile=/etc/gitnexus/mcp.env
+
+ExecStart=/usr/local/bin/gitnexus mcp --http \
+    --host 0.0.0.0 \
+    --port 4748 \
+    --auth-token ${GITNEXUS_MCP_AUTH_TOKEN}
+
+Restart=on-failure
+RestartSec=5s
+StartLimitIntervalSec=60s
+StartLimitBurst=3
+
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/opt/gitnexus-home /opt/code-repos
+PrivateTmp=true
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=gitnexus-mcp
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,22 @@
+{
+  "service": "identity-service",
+  "exported_at": "2026-06-22T10:15:00Z",
+  "index": {
+    "path": "/workspace/platform-workspace/backend-core/identity-service",
+    "indexed_at": "2026-06-22T10:03:57Z",
+    "commit": "unknown",
+    "skip_git": true
+  },
+  "stats": {
+    "files": 114,
+    "symbols": 681,
+    "edges": 1278,
+    "clusters": 28,
+    "processes": 36
+  },
+  "check": {
+    "status": "clean",
+    "cycleCount": 0,
+    "cycles": []
+  }
+}

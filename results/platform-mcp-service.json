@@ -1,0 +1,23 @@
+{
+  "service": "platform-mcp",
+  "exported_at": "2026-06-22T10:15:00Z",
+  "index": {
+    "path": "/workspace/platform-workspace/platform-tools/platform-mcp",
+    "indexed_at": "2026-06-22T10:06:14Z",
+    "commit": "46dc54d",
+    "branch": "main",
+    "skip_git": true
+  },
+  "stats": {
+    "files": 37,
+    "symbols": 317,
+    "edges": 531,
+    "clusters": 7,
+    "processes": 24
+  },
+  "check": {
+    "status": "clean",
+    "cycleCount": 0,
+    "cycles": []
+  }
+}

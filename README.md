@@ -19,6 +19,11 @@ copy `projects/example-platform/.local.yaml.example` to `.local.yaml`, set
 
 - `skills/gitnexus-implement/`: evidence-backed implementation planning across services.
 - `skills/graph-poc-report/`: leader-facing, script-first proof-of-concept reports.
+- `skills/graph-feature-discovery/`: identify feature ownership and dependencies.
+- `skills/graph-change-impact/`: evidence-backed cross-service change analysis.
+- `skills/graph-test-scope/`: risk-based QA and regression scope.
+- `skills/graph-release-readiness/`: release evidence, conditions, and rollback checks.
+- `skills/graph-incident-triage/`: bounded, read-only service-path investigation.
 
 This repository is a public-friendly reference workspace for building a
 GitNexus-backed microservice architecture map. It is not an application repo.

@@ -71,6 +71,11 @@ See [docs/PROJECTS.md](docs/PROJECTS.md) for the project contract and
 - [Client adapters and portable automation](shared/AGENTS.md)
 - [Future shared workstation setup](docs/WORKSTATION.md)
 - [Active implementation roadmap](docs/ROADMAP.md)
+
+## Verify a checkout
+
+Run `scripts/check.sh` to execute manifest, documentation, and portable-agent
+checks without private source code or GitNexus indexes.
 - [Public Sock Shop demo](projects/sock-shop/README.md)
 
 Older material under `docs/CURRENT/`, the original runbook, and deployment

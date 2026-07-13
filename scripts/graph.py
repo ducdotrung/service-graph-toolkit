@@ -34,7 +34,12 @@ def index(name):
   if rel: subprocess.run(['gitnexus','analyze',str(root/rel),'--name',f'{name}--{sid}','--force']+(['--skip-git'] if i.get('skip_git') else []),check=True)
 def main():
  a=argparse.ArgumentParser(); a.add_argument('command',choices=['init','validate','generate','index','refresh','mcp-config']); a.add_argument('project'); x=a.parse_args()
- if x.command=='init': shutil.copytree(PROJECTS/'example-platform',PROJECTS/x.project)
+ if x.command=='init':
+  target=PROJECTS/x.project
+  shutil.copytree(PROJECTS/'example-platform',target)
+  meta=yaml.safe_load((target/'project.yaml').read_text()) or {}
+  meta['id']=x.project; meta['name']=x.project.replace('-',' ').title()
+  (target/'project.yaml').write_text(yaml.safe_dump(meta,sort_keys=False))
  elif x.command=='validate': validate(x.project)
  elif x.command=='generate': generate(x.project)
  elif x.command=='index': index(x.project)

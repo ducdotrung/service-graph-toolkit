@@ -13,6 +13,7 @@ views/drift-report.md
 views/filtered-bridge.json
 .graph-work/
 projects/*/.local.yaml
+projects/*/sources/
 
 # Editor / OS scratch
 .idea/

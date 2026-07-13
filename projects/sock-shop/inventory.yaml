@@ -1,0 +1,25 @@
+schema_version: 2
+scope: public-demo
+repos:
+  front-end: {path: front-end, type: single-service}
+  catalogue: {path: catalogue, type: single-service}
+  carts: {path: carts, type: single-service}
+  orders: {path: orders, type: single-service}
+  payment: {path: payment, type: single-service}
+  shipping: {path: shipping, type: single-service}
+  user: {path: user, type: single-service}
+services:
+  front-end: {repo: front-end, role: gateway, gitnexus_index: {analyze_path: front-end}}
+  catalogue: {repo: catalogue, role: backend, gitnexus_index: {analyze_path: catalogue}}
+  carts: {repo: carts, role: backend, gitnexus_index: {analyze_path: carts}}
+  orders: {repo: orders, role: backend, gitnexus_index: {analyze_path: orders}}
+  payment: {repo: payment, role: backend, gitnexus_index: {analyze_path: payment}}
+  shipping: {repo: shipping, role: backend, gitnexus_index: {analyze_path: shipping}}
+  user: {repo: user, role: backend, gitnexus_index: {analyze_path: user}}
+edges:
+  - {from: front-end, to: catalogue, kind: feign_call, evidence: front-end/api/endpoints.js}
+  - {from: front-end, to: carts, kind: feign_call, evidence: front-end/api/endpoints.js}
+  - {from: front-end, to: orders, kind: feign_call, evidence: front-end/api/endpoints.js}
+  - {from: front-end, to: user, kind: feign_call, evidence: front-end/api/endpoints.js}
+  - {from: orders, to: payment, kind: feign_call, evidence: orders/src/main/java/works/weave/socks/orders/config/OrdersConfigurationProperties.java}
+  - {from: orders, to: shipping, kind: feign_call, evidence: orders/src/main/java/works/weave/socks/orders/config/OrdersConfigurationProperties.java}

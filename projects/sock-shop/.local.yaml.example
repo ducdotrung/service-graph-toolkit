@@ -1,0 +1,2 @@
+# The bootstrap script clones public sources here by default.
+source_root: projects/sock-shop/sources

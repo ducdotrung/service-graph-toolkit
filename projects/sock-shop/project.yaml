@@ -1,0 +1,4 @@
+schema_version: 1
+id: sock-shop
+name: Sock Shop multi-repository demo
+description: Public multi-repository microservice sample used to exercise the graph toolkit.

@@ -13,7 +13,7 @@ A common layout looks like this:
 
 ```text
 ~/workspace/
-  microservice-call-graph/
+  service-graph-toolkit/
   platform-source/
     gateway-service/
     identity-service/
@@ -102,7 +102,7 @@ Do not commit:
 
 Once your sibling repos are cloned locally:
 
-1. define service IDs in `inventory.yaml`
+1. define service IDs in `projects/<project-id>/inventory.yaml`
 2. index a small pilot set with GitNexus
 3. validate route and event edges
 4. only then expand the manifest

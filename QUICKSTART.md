@@ -1,148 +1,62 @@
-# Quickstart
-
-This guide gets you from a blank machine to a usable microservice code-graph
-workspace.
+# Service Graph Toolkit Quick Start
 
 ## Prerequisites
 
-Install GitNexus:
+Install Python 3, Git, and GitNexus:
 
 ```bash
 npm install -g gitnexus@latest
 gitnexus --version
 ```
 
-Set up a local workspace with your service repos beside this graph repo:
-
-```text
-~/workspace/
-  microservice-call-graph/
-  platform-source/
-    gateway-service/
-    identity-service/
-    bio-service/
-    user-service/
-    platform-mcp/
-```
-
-## Index a small pilot
-
-Start with a few representative services:
+## Use the public Sock Shop demo
 
 ```bash
-gitnexus analyze --skip-git --name gateway-service   ../platform-source/gateway-service
-gitnexus analyze --skip-git --name identity-service  ../platform-source/identity-service
-gitnexus analyze --skip-git --name bio-service           ../platform-source/bio-service
-gitnexus analyze --skip-git --name user-service      ../platform-source/user-service
-gitnexus analyze --name platform-mcp                 ../platform-source/platform-mcp
+scripts/fetch-sock-shop.sh
+cp projects/sock-shop/.local.yaml.example projects/sock-shop/.local.yaml
+python3 scripts/graph.py validate sock-shop
+python3 scripts/graph.py index sock-shop
+python3 scripts/graph.py generate sock-shop
 ```
 
-Then verify:
+`index` writes GitNexus indexes next to the ignored local source clones.
+`generate` writes reproducible graph artifacts under `.graph-work/sock-shop/`.
+
+## Query code and graph evidence
+
+Use project-namespaced index names, for example:
 
 ```bash
-gitnexus list
+gitnexus query "payment" -r sock-shop--orders
+gitnexus context OrdersController -r sock-shop--orders
+gitnexus impact OrdersController --direction upstream -r sock-shop--orders
 ```
 
-## Option A: Web UI
+Read service ownership and authored dependencies in:
 
-For demos or visual browsing:
+```text
+.graph-work/sock-shop/services/
+.graph-work/sock-shop/service-map.md
+projects/sock-shop/inventory.yaml
+```
+
+## Configure a local MCP client
 
 ```bash
-gitnexus serve --host 0.0.0.0 --port 4747
+python3 scripts/graph.py mcp-config sock-shop
+cat .graph-work/sock-shop/mcp.json
 ```
 
-Open:
+Copy the generated stdio server definition into your client’s local MCP
+configuration. It contains no endpoint or token.
 
-`http://localhost:4747`
-
-The UI is useful for:
-- symbol search
-- execution flows
-- cluster exploration
-- service-level browsing
-
-## Option B: MCP for AI tools
-
-Point your tool at a local or remote MCP endpoint.
-
-Local example:
-
-```json
-{
-  "mcpServers": {
-    "gitnexus": {
-      "command": "gitnexus",
-      "args": ["mcp"]
-    }
-  }
-}
-```
-
-Verify it works:
-
-```text
-@gitnexus list_repos
-```
-
-## Common workflows
-
-### What breaks if I change this?
-
-```text
-@gitnexus impact({target: "IdentityDTO", direction: "upstream", repo: "identity-service"})
-```
-
-If the change crosses service boundaries, also check `inventory.yaml`.
-
-### How does this feature work?
-
-```text
-@gitnexus query({search_query: "login authenticate", repo: "identity-service"})
-@gitnexus context({name: "AuthenticationController", repo: "identity-service"})
-```
-
-Then inspect cross-service edges in the manifest.
-
-### What does this service expose?
-
-```text
-@gitnexus query({search_query: "Controller", repo: "bio-service", limit: 10})
-@gitnexus query({search_query: "KafkaListener", repo: "bio-service"})
-```
-
-### Is there a circular dependency?
+## Create your own project
 
 ```bash
-gitnexus check --cycles -r identity-service
+python3 scripts/graph.py init my-platform
+cp projects/my-platform/.local.yaml.example projects/my-platform/.local.yaml
+python3 scripts/graph.py validate my-platform
 ```
 
-## CLI reference
-
-```bash
-gitnexus list
-gitnexus query "KafkaListener" -r bio-service
-gitnexus context IdentityClient -r identity-service
-gitnexus impact IdentityClient --direction upstream -r identity-service
-gitnexus trace LoginController UserRepository -r identity-service
-gitnexus check --cycles -r bio-service
-gitnexus serve --port 4747
-```
-
-## Cross-service questions
-
-Use both the manifest and the code graph:
-
-| Question | Best approach |
-|----------|---------------|
-| Who calls a service? | manifest first, then GitNexus inside each caller |
-| What route reaches a service? | manifest or gateway config |
-| What Kafka topics does a service consume? | GitNexus query plus manifest |
-| What tools does an MCP service expose? | manifest plus code search |
-| What breaks if a service is down? | manifest edges plus selective impact checks |
-
-## Next steps
-
-1. Sanitize `inventory.yaml`.
-2. Regenerate `group.yaml` and generated `views/` locally when needed.
-3. Remove any private `results/` artifacts before pushing.
-4. Keep the repo at a single clean initial commit before pushing.
+Edit `inventory.yaml` with service IDs, relative repository paths, cross-service
+edges, and evidence pointers. Then index and generate as above.

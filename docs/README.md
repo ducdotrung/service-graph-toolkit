@@ -2,10 +2,10 @@
 
 Last updated: 2026-07-08
 
-This directory holds the public-facing documentation for a GitNexus-based
-microservice call graph project. The aim is to keep the repo useful as a
-reference implementation without exposing private environment details,
-company-specific service inventories, or feature planning artifacts.
+This directory holds public documentation for Service Graph Toolkit: a
+project-scoped, GitNexus-backed workflow for multi-repository service systems.
+Start with [`PROJECTS.md`](PROJECTS.md) and the root quick start. The older
+`CURRENT/` documents are retained research notes, not the default workflow.
 
 ## Core docs
 

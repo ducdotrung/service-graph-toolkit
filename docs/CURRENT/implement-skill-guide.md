@@ -58,7 +58,7 @@ The output should group changes by confidence:
 
 ```bash
 mkdir -p ~/.claude/skills/gitnexus-implement
-cp /path/to/microservice-call-graph/skills/gitnexus-implement/SKILL.md \
+cp /path/to/service-graph-toolkit/skills/gitnexus-implement/SKILL.md \
   ~/.claude/skills/gitnexus-implement/SKILL.md
 ```
 

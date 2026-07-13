@@ -71,6 +71,7 @@ See [docs/PROJECTS.md](docs/PROJECTS.md) for the project contract and
 - [Client adapters and portable automation](shared/AGENTS.md)
 - [Future shared workstation setup](docs/WORKSTATION.md)
 - [Active implementation roadmap](docs/ROADMAP.md)
+- [Local Graph MCP demo](docs/MCP-DEMO.md)
 
 ## Verify a checkout
 

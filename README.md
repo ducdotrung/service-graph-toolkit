@@ -15,6 +15,11 @@ Generated files are written to `.graph-work/<project>/`. To index private code,
 copy `projects/example-platform/.local.yaml.example` to `.local.yaml`, set
 `source_root`, then run `python3 scripts/graph.py index example-platform`.
 
+## Skills
+
+- `skills/gitnexus-implement/`: evidence-backed implementation planning across services.
+- `skills/graph-poc-report/`: leader-facing, script-first proof-of-concept reports.
+
 This repository is a public-friendly reference workspace for building a
 GitNexus-backed microservice architecture map. It is not an application repo.
 It is the documentation, manifest, and tooling layer that sits beside a set of

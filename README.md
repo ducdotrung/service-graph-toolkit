@@ -67,6 +67,8 @@ See [docs/PROJECTS.md](docs/PROJECTS.md) for the project contract and
 - [Project model](docs/PROJECTS.md)
 - [Quick start](QUICKSTART.md)
 - [Query and workflow usage](docs/USAGE.md)
+- [Client adapters and portable automation](shared/AGENTS.md)
+- [Future shared workstation setup](docs/WORKSTATION.md)
 - [Public Sock Shop demo](projects/sock-shop/README.md)
 
 Older material under `docs/CURRENT/`, the original runbook, and deployment

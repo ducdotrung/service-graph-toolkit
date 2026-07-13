@@ -34,7 +34,8 @@ python3 scripts/graph.py mcp-config sock-shop
 ```
 
 Generated files are written to `.graph-work/<project>/`. The MCP command
-creates a credential-free local stdio configuration snippet.
+creates a credential-free local stdio configuration snippet. Install the local
+MCP server dependencies once with `npm install --prefix mcp-server` (Node 20+).
 
 ## Project layout
 

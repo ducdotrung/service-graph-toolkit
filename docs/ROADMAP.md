@@ -18,7 +18,7 @@ single-platform assumptions in `docs/NEXT-PHASE.md`.
 - Local-first workstation guidance; legacy deployment templates remain reference
   material only.
 
-## Next: local Graph MCP server
+## Local Graph MCP server
 
 Build a local stdio server in this repository. It must wrap existing scripts
 and GitNexus rather than duplicate graph logic.
@@ -43,9 +43,8 @@ Requirements:
 - Do not expose arbitrary shell execution, indexing, refresh, deployment, or
   secrets through v1 MCP tools.
 
-Acceptance: a fresh user can generate `mcp-config`, connect a local MCP client,
-and answer one documented Sock Shop ownership/impact question without manually
-opening project files.
+Implemented as `mcp-server/index.mjs`; remaining acceptance work is an
+end-to-end client smoke test after dependencies are installed.
 
 ## Next: deterministic quality gates
 

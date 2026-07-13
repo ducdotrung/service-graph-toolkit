@@ -39,7 +39,9 @@ def main():
  elif x.command=='generate': generate(x.project)
  elif x.command=='index': index(x.project)
  elif x.command=='refresh': index(x.project); generate(x.project)
- else: output(x.project).joinpath('mcp.json').write_text(json.dumps({'mcpServers':{f'gitnexus-{x.project}':{'command':'gitnexus','args':['mcp']}}},indent=2)+'\n')
+ else:
+  server=str(ROOT/'mcp-server'/'index.mjs')
+  output(x.project).joinpath('mcp.json').write_text(json.dumps({'mcpServers':{f'service-graph-{x.project}':{'command':'node','args':[server]},f'gitnexus-{x.project}':{'command':'gitnexus','args':['mcp']}}},indent=2)+'\n')
 if __name__=='__main__':
  try: main()
  except (ValueError,FileNotFoundError,subprocess.CalledProcessError) as e: print(f'error: {e}',file=sys.stderr); raise SystemExit(2)

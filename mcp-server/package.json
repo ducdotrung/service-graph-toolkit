@@ -1,0 +1,12 @@
+{
+  "name": "service-graph-toolkit-mcp",
+  "private": true,
+  "engines": { "node": ">=20" },
+  "type": "module",
+  "scripts": { "start": "node index.mjs", "check": "node --check index.mjs" },
+  "dependencies": {
+    "@modelcontextprotocol/server": "^2.0.0-beta.3",
+    "zod": "^4.0.0",
+    "yaml": "^2.0.0"
+  }
+}

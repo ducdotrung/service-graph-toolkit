@@ -13,3 +13,4 @@ projects, audit tool calls, and keep outputs bounded.
 Existing `deploy/` templates are legacy reference material and must be
 parameterized and reviewed before use. The safe rollout is: local pilot,
 read-only shared workstation, then explicitly approved mutation workflows.
+The local Graph MCP server requires Node.js 20 or newer.

@@ -49,14 +49,14 @@ def group_path(service_id: str, service: dict) -> str:
     return f"{bucket}/{service_id}"
 
 
-def build_repos(services: dict) -> dict[str, str]:
+def build_repos(services: dict, project_id: str | None = None) -> dict[str, str]:
     """{group_path: gitnexus_registry_name} for every indexed service."""
     out: dict[str, str] = {}
     for sid, svc in services.items():
         idx = svc.get("gitnexus_index")
-        if not idx or not idx.get("name"):
+        if not idx:
             continue
-        out[group_path(sid, svc)] = idx["name"]
+        out[group_path(sid, svc)] = idx.get("name") or f"{project_id}--{sid}"
     return out
 
 
@@ -127,10 +127,10 @@ def build_links(edges: list[dict], paths: dict[str, str]) -> list[dict]:
     return links
 
 
-def build_group(inventory: dict, name: str = "example-platform") -> dict:
+def build_group(inventory: dict, name: str = "example-platform", project_id: str | None = None) -> dict:
     services = inventory.get("services", {})
     edges = inventory.get("edges", [])
-    repos = build_repos(services)
+    repos = build_repos(services, project_id)
     # Restrict paths to indexed services so links never reference an
     # unregistered repo (gitnexus group sync would silently drop those links).
     paths = {sid: group_path(sid, svc) for sid, svc in services.items()
@@ -173,12 +173,13 @@ def main() -> int:
     parser.add_argument("--inventory", default=str(INVENTORY))
     parser.add_argument("--out", default=str(REPO_ROOT / "group.yaml"))
     parser.add_argument("--name", default="example-platform")
+    parser.add_argument("--project-id", help="Namespace derived GitNexus index names")
     args = parser.parse_args()
 
     with open(args.inventory) as fh:
         inventory = yaml.safe_load(fh)
 
-    group = build_group(inventory, name=args.name)
+    group = build_group(inventory, name=args.name, project_id=args.project_id)
     with open(args.out, "w") as fh:
         yaml.safe_dump(group, fh, sort_keys=False, width=120, allow_unicode=True)
 

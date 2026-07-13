@@ -1,0 +1,15 @@
+schema_version: 2
+scope: example
+repos:
+  backend-core: {path: backend-core, type: monorepo}
+services:
+  gateway-service:
+    repo: backend-core
+    role: gateway
+    gitnexus_index: {analyze_path: backend-core/gateway-service, skip_git: true}
+  identity-service:
+    repo: backend-core
+    role: backend
+    gitnexus_index: {analyze_path: backend-core/identity-service, skip_git: true}
+edges:
+  - {from: gateway-service, to: identity-service, kind: gateway_route, path: /identity/**, evidence: backend-core/gateway-service/application.yml}

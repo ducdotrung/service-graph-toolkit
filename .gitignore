@@ -11,6 +11,8 @@ views/service-map.md
 views/services/
 views/drift-report.md
 views/filtered-bridge.json
+.graph-work/
+projects/*/.local.yaml
 
 # Editor / OS scratch
 .idea/

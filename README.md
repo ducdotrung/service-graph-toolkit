@@ -1,5 +1,20 @@
 # Microservice Call Graph
 
+This is a reusable, multi-project GitNexus graph toolkit. Start with the
+fictional example under `projects/example-platform`; private source repositories
+stay outside this checkout and are referenced only by ignored `.local.yaml`
+files.
+
+```bash
+python3 scripts/graph.py validate example-platform
+python3 scripts/graph.py generate example-platform
+python3 scripts/graph.py mcp-config example-platform
+```
+
+Generated files are written to `.graph-work/<project>/`. To index private code,
+copy `projects/example-platform/.local.yaml.example` to `.local.yaml`, set
+`source_root`, then run `python3 scripts/graph.py index example-platform`.
+
 This repository is a public-friendly reference workspace for building a
 GitNexus-backed microservice architecture map. It is not an application repo.
 It is the documentation, manifest, and tooling layer that sits beside a set of

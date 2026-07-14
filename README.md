@@ -72,6 +72,7 @@ See [docs/PROJECTS.md](docs/PROJECTS.md) for the project contract and
 - [Future shared workstation setup](docs/WORKSTATION.md)
 - [Active implementation roadmap](docs/ROADMAP.md)
 - [Local Graph MCP demo](docs/MCP-DEMO.md)
+- [Sock Shop hackathon demonstration](docs/HACKATHON-DEMO.md)
 
 ## Verify a checkout
 

@@ -69,7 +69,7 @@ Acceptance: a representative article retains headings, paragraphs, links, and
 code blocks in Markdown; a PDF creates both cited Markdown metadata and a
 binary sidecar.
 
-## Next: hackathon demonstration path
+## Completed: hackathon demonstration path
 
 Create one script and guide that performs: fetch Sock Shop sources, configure
 local source root, validate, index, generate, run one cross-service impact

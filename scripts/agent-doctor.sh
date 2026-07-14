@@ -7,4 +7,5 @@ command -v python3 >/dev/null || { echo 'missing: python3' >&2; exit 1; }
 command -v node >/dev/null || { echo 'missing: node' >&2; exit 1; }
 bash -n scripts/context-pack.sh scripts/agent-doctor.sh
 node --check scripts/fetch-web.mjs
+node -e "import('./scripts/fetch-web.mjs')"
 echo 'Service Graph Toolkit agent checks passed'

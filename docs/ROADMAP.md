@@ -46,7 +46,7 @@ Requirements:
 Implemented as `mcp-server/index.mjs`; remaining acceptance work is an
 end-to-end client smoke test after dependencies are installed.
 
-## Next: deterministic quality gates
+## Completed: deterministic quality gates
 
 Add automated tests for `scripts/graph.py`, project manifests, and generated
 artifacts. At minimum test invalid service/edge references, unsafe inventory
@@ -54,10 +54,10 @@ paths, index-name namespacing, `init`, and end-to-end generation for both
 bundled projects. Add a link/documentation check and run `agent-doctor.sh` in
 the same test command.
 
-Acceptance: one documented command validates the toolkit on a clean checkout
-without requiring private sources or GitNexus indexes.
+Delivered by `scripts/check.sh`, which runs graph and documentation tests plus
+`agent-doctor.sh` without requiring private sources or GitNexus indexes.
 
-## Next: improve web evidence extraction
+## Completed: improve web evidence extraction
 
 Replace the dependency-free HTML stripping in `scripts/fetch-web.mjs` with a
 proper readability-to-Markdown implementation. Keep the current CLI contract,

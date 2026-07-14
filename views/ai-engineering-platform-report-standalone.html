@@ -1459,7 +1459,7 @@
         <div class="card">
           <span class="tag">Freshness</span>
           <h3>Easy to rebuild</h3>
-          <p>The workstation refresh pipeline pulls repos, re-indexes changed code, regenerates JSON/pages/service-map/group views, syncs the GitNexus group, filters noisy links, and refreshes local derived artifacts. It runs nightly now and can move to PR-triggered rebuilds later.</p>
+          <p>The local workflow is rebuilt on demand. A shared-workstation template can validate, re-index, and regenerate declared project sources on a schedule, without automatic cloning or pulling; PR-triggered refresh remains a later option.</p>
         </div>
         <div class="card">
           <span class="tag">Human in the loop</span>
@@ -1984,7 +1984,7 @@
         <div class="card">
           <span class="tag">Daily now, PR later</span>
           <h3>Refresh strategy</h3>
-          <p>The demo workstation job pulls all repos and rebuilds changed indexes nightly. If the PoC moves toward production, the same pipeline can be triggered per PR or per merge for fresher impact analysis.</p>
+          <p>Local demos rebuild on demand. The shared-workstation template schedules only validate/index/generate against declared sources; it does not clone or pull. A PR or merge trigger is a future freshness option.</p>
         </div>
         <div class="card">
           <span class="tag">Skill proof</span>
@@ -1998,17 +1998,14 @@
         <div class="card">
           <span class="tag">MCP onboarding</span>
           <h3>One config connects the graph</h3>
-          <p>Developers and agents do not need custom integration code to start using the platform graph. They only need a small MCP config that points to the GitNexus endpoint and injects the bearer token.</p>
+          <p>Developers and agents start with local stdio MCP. A remote transport is optional and must sit behind an authenticated gateway that sets a project allowlist and audit identity for each session.</p>
         </div>
         <div class="code-sample" aria-label="GitNexus MCP config sample">
 <code>{
   <span class="yaml-key">"mcpServers"</span>: {
-    <span class="yaml-key">"gitnexus"</span>: {
-      <span class="yaml-key">"type"</span>: <span class="yaml-value">"http"</span>,
-      <span class="yaml-key">"url"</span>: <span class="yaml-value">"http://localhost:4748/mcp"</span>,
-      <span class="yaml-key">"headers"</span>: {
-        <span class="yaml-key">"Authorization"</span>: <span class="yaml-value">"Bearer ${GITNEXUS_BEARER_TOKEN}"</span>
-      }
+    <span class="yaml-key">"service-graph"</span>: {
+      <span class="yaml-key">"command"</span>: <span class="yaml-value">"node"</span>,
+      <span class="yaml-key">"args"</span>: [<span class="yaml-value">"/path/to/service-graph-toolkit/mcp-server/index.mjs"</span>]
     }
   }
 }</code>
@@ -2440,10 +2437,10 @@
         <div class="source">Generated service map: views/service-map.md</div>
         <div class="source">K8s/CI/CD deployment config mapping: docs/CURRENT/platform-overview.md</div>
         <div class="source">Inventory scripts: scripts/inventory-to-json.py, scripts/inventory-to-pages.py, scripts/inventory-to-service-map.py, scripts/inventory-to-group.py</div>
-        <div class="source">Refresh script: scripts/workstation-refresh.sh</div>
+        <div class="source">Current refresh path: deploy/shared-workstation-refresh.sh and docs/WORKSTATION.md</div>
         <div class="source">Graph bridge: views/filtered-bridge.json</div>
         <div class="source">Graph docs: docs/CURRENT/</div>
-        <div class="source">MCP config example: docs/workstation-mcp.example.json</div>
+        <div class="source">Local MCP demo: docs/MCP-DEMO.md and mcp-server/index.mjs</div>
         <div class="source">Implementation replay proof: bundled comparison artifacts kept locally under `public/` for presentation use.</div>
         <div class="source">Alert artifacts: examples/alerts/</div>
         <div class="source">Alert pipeline state: examples/alert-metrics/pipeline_state.json</div>

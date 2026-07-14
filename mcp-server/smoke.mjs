@@ -6,7 +6,7 @@ import { resolve } from 'node:path';
 
 const dir = resolve(fileURLToPath(new URL('.', import.meta.url)));
 const client = new Client({ name: 'service-graph-toolkit-smoke', version: '0.1.0' });
-await client.connect(new StdioClientTransport({ command: process.execPath, args: ['index.mjs'], cwd: dir }));
+await client.connect(new StdioClientTransport({ command: process.execPath, args: ['index.mjs'], cwd: dir, env: Object.fromEntries(Object.entries(process.env).filter(([, value]) => value !== undefined)) }));
 const tools = await client.listTools();
 const names = tools.tools.map(tool => tool.name).sort();
 for (const required of ['list_projects', 'get_project_context', 'get_service_details', 'get_service_map', 'validate_project']) {

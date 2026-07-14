@@ -16,4 +16,7 @@ Parameterized, project-instance templates live in `deploy/templates/`.
 uses credentials. Copy `deploy/project.env.example` to a protected per-project
 environment file, render the service placeholders for the dedicated account and
 workspace root, then enable `service-graph-refresh@<project>.timer`.
+For a remote transport, an authenticated gateway must set
+`SERVICE_GRAPH_ALLOWED_PROJECTS`, `SERVICE_GRAPH_CALLER`, and a protected
+`SERVICE_GRAPH_AUDIT_LOG` for each session. The toolkit filters project access
 The local Graph MCP server requires Node.js 20 or newer.

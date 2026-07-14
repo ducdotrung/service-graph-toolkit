@@ -38,3 +38,15 @@ get_change_impact(project="sock-shop", service="orders", symbol="OrdersControlle
 Those tools return GitNexus output together with the manifest's adjacent
 cross-service edges. They do not claim runtime behavior beyond the indexed code
 and authored evidence.
+
+## Indexed local-MCP smoke test
+
+After GitNexus is available on `PATH` and `sock-shop` has been indexed, run:
+
+```bash
+MCP_SMOKE_CODE=1 npm run --prefix mcp-server smoke
+```
+
+This calls `get_change_impact` for `OrdersController` through the local stdio
+server. The response combines static GitNexus impact with the declared
+front-end, payment, and shipping edges from the Sock Shop inventory.

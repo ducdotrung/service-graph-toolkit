@@ -14,5 +14,6 @@ for (const required of ['list_projects', 'get_project_context', 'get_service_det
 }
 const projects = await client.callTool({ name: 'list_projects', arguments: {} });
 const details = await client.callTool({ name: 'get_service_details', arguments: { project: 'sock-shop', service: 'orders' } });
-console.log(JSON.stringify({ tools: names, projects: projects.content, sockShopOrders: details.content }, null, 2));
+const impact = process.env.MCP_SMOKE_CODE ? await client.callTool({ name: 'get_change_impact', arguments: { project: 'sock-shop', service: 'orders', symbol: 'OrdersController', direction: 'upstream' } }) : undefined;
+console.log(JSON.stringify({ tools: names, projects: projects.content, sockShopOrders: details.content, ...(impact ? { ordersImpact: impact.content } : {}) }, null, 2));
 await client.close();

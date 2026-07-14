@@ -1472,9 +1472,9 @@
     <section class="slide" id="inventory-sample">
       <div class="eyebrow">Inventory sample</div>
       <h2>What humans actually edit</h2>
-      <p class="lead">The inventory is deliberately boring YAML. That is the point: AI can propose changes, but engineers can review and correct service ownership, repo paths, deployment bindings, and cross-service edges with evidence.</p>
+      <p class="lead">The Sock Shop inventory is deliberately boring YAML: seven services and six source-backed HTTP/Feign edges. Engineers can review and correct ownership, repo paths, and cross-service evidence without trusting generated prose.</p>
 
-      <div class="code-sample" aria-label="Sample inventory.yaml excerpt">
+      <div class="code-sample" style="display:none" aria-label="Legacy inventory example hidden; use projects/sock-shop/inventory.yaml">
 <code><span class="yaml-comment"># inventory.yaml is the source of truth for cross-service facts.
 # Every important service or edge should cite evidence; otherwise it is a guess.</span>
 
@@ -1499,15 +1499,15 @@
       <span class="yaml-key">path:</span> <span class="yaml-value">backend-core/chart</span>
 
 <span class="yaml-key">edges:</span>
-  - <span class="yaml-key">from:</span> <span class="yaml-value">gateway-service</span>
-    <span class="yaml-key">to:</span> <span class="yaml-value">bio-service</span>
-    <span class="yaml-key">kind:</span> <span class="yaml-value">gateway_route</span>
-    <span class="yaml-key">evidence:</span> <span class="yaml-value">backend-core/gateway-service/src/main/resources/application.yml</span>
-
-  - <span class="yaml-key">from:</span> <span class="yaml-value">bio-service</span>
-    <span class="yaml-key">to:</span> <span class="yaml-value">identity-service</span>
+  - <span class="yaml-key">from:</span> <span class="yaml-value">front-end</span>
+    <span class="yaml-key">to:</span> <span class="yaml-value">orders</span>
     <span class="yaml-key">kind:</span> <span class="yaml-value">feign_call</span>
-    <span class="yaml-key">evidence:</span> <span class="yaml-value">backend-core/bio-service/**/client/Identity*.java</span></code>
+    <span class="yaml-key">evidence:</span> <span class="yaml-value">front-end/api/endpoints.js</span>
+
+  - <span class="yaml-key">from:</span> <span class="yaml-value">orders</span>
+    <span class="yaml-key">to:</span> <span class="yaml-value">payment</span>
+    <span class="yaml-key">kind:</span> <span class="yaml-value">feign_call</span>
+    <span class="yaml-key">evidence:</span> <span class="yaml-value">orders/src/main/java/works/weave/socks/orders/config/OrdersConfigurationProperties.java</span></code>
       </div>
 
       <div class="three-col">
@@ -1531,10 +1531,15 @@
 
     <section class="slide" id="service-map">
       <div class="eyebrow">Real generated map</div>
-      <h2>Service map from the graph repo, rearranged for presentation</h2>
-      <p class="lead">The generated Mermaid map is large, so this page opens with a grouped summary and then expands the same source into readable pages. Source header: 6 indexed services and 7 inventory edges. Visible Mermaid graph lines: 7 edges: 3 gateway routes, 1 Feign call, 2 Kafka edges, and 1 MCP tool-use edge.</p>
+      <h2>Real Sock Shop service map, rearranged for presentation</h2>
+      <p class="lead">The generated Sock Shop map has 7 indexed services and 6 authored HTTP/Feign edges: front-end calls catalogue, carts, orders, and user; orders calls payment and shipping.</p>
+      <div class="edge-grid">
+        <div class="edge-group"><strong>front-end</strong><small>4 direct dependencies</small><div class="edge-tags"><span class="edge-tag">catalogue</span><span class="edge-tag">carts</span><span class="edge-tag">orders</span><span class="edge-tag">user</span></div></div>
+        <div class="edge-group"><strong>orders</strong><small>2 checkout dependencies</small><div class="edge-tags"><span class="edge-tag">payment</span><span class="edge-tag">shipping</span></div></div>
+      </div>
 
-      <svg class="diagram" viewBox="0 0 1120 560" role="img" aria-label="Rearranged service map from generated Mermaid inventory">
+
+      <svg class="diagram" style="display:none" viewBox="0 0 1120 560" role="img" aria-label="Legacy platform map hidden; see real Sock Shop map below">
         <defs>
           <marker id="mapArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
             <path d="M0,0 L8,4 L0,8 Z" fill="#386476"></path>
@@ -1613,7 +1618,7 @@
         <path d="M454 444 C520 366, 570 254, 528 228" fill="none" stroke="#b95d3b" stroke-width="3" stroke-dasharray="7 7" marker-end="url(#mapKafka)"></path>
       </svg>
 
-      <div class="map-legend">
+      <div class="map-legend" style="display:none">
         <span class="legend-pill"><span class="legend-dot" style="background:#fef3c7;border:1px solid #d97706"></span>gateway</span>
         <span class="legend-pill"><span class="legend-dot" style="background:#dbeafe;border:1px solid #2563eb"></span>backend</span>
         <span class="legend-pill"><span class="legend-dot" style="background:#e5e7eb;border:1px solid #4b5563"></span>worker</span>
@@ -1622,9 +1627,9 @@
         <span class="legend-pill"><span class="legend-dot" style="background:#d1fae5;border:1px solid #059669"></span>tools / AI services</span>
       </div>
 
-      <div class="note">This is a presentation-friendly rendering of the generated service map. Source: views/service-map.md</div>
+      <div class="note">Source: generated `.graph-work/sock-shop/service-map.md`; static code indexes provide separate evidence.</div>
 
-      <div class="two-col">
+      <div class="two-col" style="display:none">
         <div class="card">
           <span class="tag">Mermaid source</span>
           <h3>Not one flat graph</h3>
@@ -1640,17 +1645,17 @@
 
     <section class="slide" id="service-map-roster">
       <div class="eyebrow">Service map detail</div>
-      <h2>The map covers the platform by service role</h2>
-      <p class="lead">This is the first thing leadership should see after the summary: the graph is not only one service. It covers gateway, backend services, workers, MCP servers, AI apps, AI services, and tools.</p>
+      <h2>The Sock Shop map covers one gateway and six backend services</h2>
+      <p class="lead">The public sample separates front-end entry from catalogue, carts, orders, payment, shipping, and user backends. Every declared edge can be checked against source evidence.</p>
 
       <div class="metric-row">
-        <div class="metric"><b>6</b><span>indexed services</span><small>from service-map.md header</small></div>
-        <div class="metric"><b>5</b><span>service roles</span><small>gateway, backend, bio, MCP, AI app</small></div>
-        <div class="metric"><b>7</b><span>visible edges</span><small>Mermaid edge lines in full graph</small></div>
-        <div class="metric"><b>7</b><span>inventory edges</span><small>source metadata from inventory.yaml</small></div>
+        <div class="metric"><b>7</b><span>indexed services</span><small>real public repositories</small></div>
+        <div class="metric"><b>2</b><span>service roles</span><small>gateway and backend</small></div>
+        <div class="metric"><b>6</b><span>visible edges</span><small>all authored HTTP/Feign</small></div>
+        <div class="metric"><b>6</b><span>inventory edges</span><small>source-backed declarations</small></div>
       </div>
 
-      <div class="role-roster">
+      <div class="role-roster" style="display:none">
         <div class="role-card">
           <strong>Gateway</strong>
           <small>1 service</small>
@@ -1736,10 +1741,10 @@
 
     <section class="slide" id="service-map-gateway">
       <div class="eyebrow">Gateway routes</div>
-      <h2>Gateway route map: one entry point fans out to 17 services</h2>
-      <p class="lead">The gateway view is useful for impact analysis: route changes, auth changes, API gateway incidents, or deployment issues can be traced to these routed services.</p>
+      <h2>Front-end call map: one entry point reaches four services</h2>
+      <p class="lead">The Sock Shop inventory declares front-end calls to catalogue, carts, orders, and user. These are client-call edges, not runtime traffic measurements.</p>
 
-      <div class="edge-group gateway">
+      <div class="edge-group gateway" style="display:none">
         <strong>gateway-service <span class="edge-arrow">-></span> routed services</strong>
         <small>3 route edges from the generated Mermaid graph</small>
         <div class="route-grid">
@@ -1763,15 +1768,15 @@
         </div>
       </div>
 
-      <div class="note">This slide intentionally repeats the route list instead of hiding it behind the Mermaid file. It gives a manager or tech lead an immediate answer to "what does the gateway expose?"</div>
+      <div class="note">The four front-end edges are authored client-call evidence. Validate routes and runtime traffic separately before treating them as public API coverage.</div>
     </section>
 
     <section class="slide" id="service-map-feign">
       <div class="eyebrow">Feign dependency map</div>
-      <h2>Feign calls show the highest cross-service coupling</h2>
-      <p class="lead">The generated graph contains 1 Feign edge. Grouping by caller makes ownership and impact easier to read than a single dense Mermaid diagram.</p>
+      <h2>Six HTTP/Feign edges show the Sock Shop checkout path</h2>
+      <p class="lead">Front-end has four outgoing calls; orders has two checkout dependencies: payment and shipping. Treat the manifest as authored contract evidence and GitNexus as code-level follow-up.</p>
 
-      <div class="edge-grid">
+      <div class="edge-grid" style="display:none">
         <div class="edge-group">
           <strong>bio-service</strong>
           <small>11 outgoing Feign calls</small>
@@ -1881,11 +1886,11 @@
     </section>
 
     <section class="slide" id="service-map-events">
-      <div class="eyebrow">Kafka and MCP edges</div>
-      <h2>Async and AI-tool edges are separate risk paths</h2>
-      <p class="lead">The map should not only show HTTP calls. Kafka edges explain async side effects, while MCP tool use shows where AI apps enter the service graph.</p>
+      <div class="eyebrow">Async and MCP edge coverage</div>
+      <h2>No async or MCP edges are declared in this Sock Shop sample</h2>
+      <p class="lead">The generated Sock Shop inventory currently contains only six HTTP/Feign edges. Kafka, MCP, and runtime-observed dependencies are explicitly outside this public sample rather than implied by the diagram.</p>
 
-      <div class="two-col">
+      <div class="two-col" style="display:none">
         <div class="edge-group kafka">
           <strong>Kafka edges</strong>
           <small>2 visible Mermaid edges</small>
@@ -1928,30 +1933,30 @@
               </marker>
             </defs>
             <rect x="20" y="110" width="100" height="54" rx="16" fill="#fef3c7" stroke="#d97706"></rect>
-            <text class="flow-title" x="70" y="142" text-anchor="middle">gateway</text>
+            <text class="flow-title" x="70" y="142" text-anchor="middle">front-end</text>
 
             <rect x="170" y="30" width="100" height="54" rx="16" fill="#dbeafe" stroke="#2563eb"></rect>
-            <text class="flow-title" x="220" y="62" text-anchor="middle">bio</text>
+            <text class="flow-title" x="220" y="62" text-anchor="middle">catalogue</text>
             <rect x="170" y="112" width="100" height="54" rx="16" fill="#dbeafe" stroke="#2563eb"></rect>
-            <text class="flow-title" x="220" y="144" text-anchor="middle">operation</text>
+            <text class="flow-title" x="220" y="144" text-anchor="middle">carts</text>
             <rect x="170" y="194" width="100" height="54" rx="16" fill="#dbeafe" stroke="#2563eb"></rect>
-            <text class="flow-title" x="220" y="226" text-anchor="middle">power</text>
+            <text class="flow-title" x="220" y="226" text-anchor="middle">orders</text>
 
             <rect x="330" y="30" width="112" height="54" rx="16" fill="#ede9fe" stroke="#7c3aed"></rect>
-            <text class="flow-title" x="386" y="62" text-anchor="middle">mcp</text>
+            <text class="flow-title" x="386" y="62" text-anchor="middle">payment</text>
             <rect x="330" y="112" width="112" height="54" rx="16" fill="#e5e7eb" stroke="#4b5563"></rect>
-            <text class="flow-title" x="386" y="144" text-anchor="middle">workers</text>
+            <text class="flow-title" x="386" y="144" text-anchor="middle">shipping</text>
             <rect x="330" y="194" width="112" height="54" rx="16" fill="#ffe4e6" stroke="#e11d48"></rect>
-            <text class="flow-title" x="386" y="226" text-anchor="middle">AI svc</text>
+            <text class="flow-title" x="386" y="226" text-anchor="middle">user</text>
 
             <path d="M120 137 L170 57" fill="none" stroke="#386476" stroke-width="3" marker-end="url(#svcArrow)"></path>
             <path d="M120 137 L170 139" fill="none" stroke="#386476" stroke-width="3" marker-end="url(#svcArrow)"></path>
             <path d="M120 137 L170 221" fill="none" stroke="#386476" stroke-width="3" marker-end="url(#svcArrow)"></path>
-            <path d="M270 57 L330 57" fill="none" stroke="#386476" stroke-width="3" marker-end="url(#svcArrow)"></path>
-            <path d="M270 139 L330 139" fill="none" stroke="#b95d3b" stroke-width="3" stroke-dasharray="6 6" marker-end="url(#svcArrow)"></path>
-            <path d="M270 221 L330 221" fill="none" stroke="#486f55" stroke-width="3" marker-end="url(#svcArrow)"></path>
+            <path d="M270 221 L330 57" fill="none" stroke="#386476" stroke-width="3" marker-end="url(#svcArrow)"></path>
+            <path d="M270 221 L330 139" fill="none" stroke="#386476" stroke-width="3" marker-end="url(#svcArrow)"></path>
+            <path d="M120 137 L330 221" fill="none" stroke="#386476" stroke-width="3" marker-end="url(#svcArrow)"></path>
           </svg>
-          <p>Generated service map has gateway routes, Feign calls, Kafka edges, and MCP tool usage. Source: views/service-map.md.</p>
+          <p>Real Sock Shop sample: front-end calls catalogue, carts, orders, and user; orders calls payment and shipping. Source: generated `.graph-work/sock-shop/service-map.md`.</p>
         </div>
         <div class="service-map-card">
           <h3>DB model</h3>

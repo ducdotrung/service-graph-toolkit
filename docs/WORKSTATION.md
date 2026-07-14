@@ -10,7 +10,10 @@ automatic cloning, pulling, arbitrary shell execution, or public HTTP MCP
 access by default. Authenticate remote MCP clients, scope them to authorized
 projects, audit tool calls, and keep outputs bounded.
 
-Existing `deploy/` templates are legacy reference material and must be
-parameterized and reviewed before use. The safe rollout is: local pilot,
-read-only shared workstation, then explicitly approved mutation workflows.
+Parameterized, project-instance templates live in `deploy/templates/`.
+`deploy/shared-workstation-refresh.sh` runs only `validate`, `index`, and
+`generate`; it never clones, pulls, starts containers, exposes HTTP MCP, or
+uses credentials. Copy `deploy/project.env.example` to a protected per-project
+environment file, render the service placeholders for the dedicated account and
+workspace root, then enable `service-graph-refresh@<project>.timer`.
 The local Graph MCP server requires Node.js 20 or newer.

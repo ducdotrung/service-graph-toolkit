@@ -1,0 +1,22 @@
+[Unit]
+Description=Service Graph index/generate refresh for %i
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User={service_user}
+Group={service_user}
+EnvironmentFile={environment_dir}/projects/%i.env
+ExecStart={workspace_root}/toolkit/deploy/shared-workstation-refresh.sh %i
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths={workspace_root}
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+SystemCallArchitectures=native
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target
